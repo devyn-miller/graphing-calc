@@ -38,3 +38,18 @@ plt.close()
 
 
 
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_function(expression):
+    x = np.linspace(-10, 10, 400)
+    y = eval(expression, {"x": x, "__builtins__": None}, np.__dict__)
+    plt.figure()
+    plt.plot(x, y)
+    plt.xlabel('X Axis')
+    plt.ylabel('Y Axis')
+    plt.title('Plot of the function')
+    plt.grid(True)
+    plt.show()

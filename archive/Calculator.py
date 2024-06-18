@@ -1,5 +1,8 @@
 from tkinter import *
 import math
+from Plotter import plot_function
+from Derivative import calculate_derivative
+from IndefiniteIntegration import calculate_indefinite_integral
 
 
 class Calc():
@@ -36,7 +39,8 @@ class Calc():
 
     def display(self, value):
         text_box.delete(0, END)
-        text_box.insert(0, value)
+        text_box.insert(0, str(value))  # Ensure value is a string
+        root.update()  # Force the GUI to refresh
 
     def do_sum(self):
         if self.op == "add":
@@ -195,10 +199,23 @@ clear.grid(row = 1, column = 4,  padx=1, pady = 1)
 
 all_clear = Button(calc,height =2,width=4,padx=10, pady = 10, text = "AC",bg="white")
 all_clear["command"] = sum1.all_clear
-all_clear.grid(row = 1, column = 5, padx=1, pady = 1)
+all_clear.grid(row = 1, column = 5, padx=1, pady=1)
 
 equals = Button(calc,height =6,width=4,padx=10, pady = 10, text = "=",bg="green")
 equals["command"] = sum1.calc_total
 equals.grid(row = 4, column = 5,columnspan=1,rowspan=2,padx=1, pady = 1)
 
+plot_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Plot', bg="blue")
+plot_button["command"] = lambda: plot_function(text_box.get())
+plot_button.grid(row=6, column=0, padx=1, pady=1)
+
+derivative_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Deriv', bg="blue")
+derivative_button["command"] = lambda: calculate_derivative(text_box.get())
+derivative_button.grid(row=6, column=1, padx=1, pady=1)
+
+integral_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Integrate', bg="blue")
+integral_button["command"] = lambda: calculate_indefinite_integral(text_box.get())
+integral_button.grid(row=6, column=2, padx=1, pady=1)
+
 root.mainloop()
+
