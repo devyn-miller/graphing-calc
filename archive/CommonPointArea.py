@@ -77,3 +77,31 @@ plt.close()
 
 
 
+def plot_common_points(func1, func2):
+    x1, y1, x2, y2 = [], [], [], []
+    a1, a2 = [], []
+    ctr = -10
+    while ctr <= 10:
+        try:
+            add1 = eval(func1.replace('x', str(ctr)))
+            x1.append(ctr)
+            y1.append(add1)
+            a1.append([ctr, add1])
+        except:
+            pass
+        try:
+            add2 = eval(func2.replace('x', str(ctr)))
+            x2.append(ctr)
+            y2.append(add2)
+            a2.append([ctr, add2])
+        except:
+            pass
+        ctr += 1
+    common_points = [point for point in a1 if point in a2]
+    if common_points:
+        nx, ny = zip(*common_points)
+        plt.plot(nx, ny, 'ro')
+    plt.plot(x1, y1, label=func1, color='blue')
+    plt.plot(x2, y2, label=func2, color='red')
+    plt.legend()
+    plt.show()

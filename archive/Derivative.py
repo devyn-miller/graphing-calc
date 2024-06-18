@@ -45,3 +45,19 @@ ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data',0))
 plt.show()
 plt.close()
+
+def calculate_derivative(expression):
+    def func(x):
+        return eval(expression, {"x": x, "__builtins__": None}, np.__dict__)
+    
+    x_vals = np.linspace(-10, 10, 400)
+    d_func = np.vectorize(lambda x: derivative(func, x, dx=1e-6))
+    y_vals = d_func(x_vals)
+    
+    plt.figure()
+    plt.plot(x_vals, y_vals)
+    plt.xlabel('X Axis')
+    plt.ylabel('Y Axis')
+    plt.title('Derivative of the function')
+    plt.grid(True)
+    plt.show()

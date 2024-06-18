@@ -23,4 +23,14 @@ plt.show()
 plt.close()
 
 
-
+def plot_polar(expression):
+    rads = np.arange(-2 * np.pi, 2 * np.pi, 0.1)
+    theta, r = [], []
+    for angle in rads:
+        try:
+            r.append(eval(expression.replace('theta', str(angle))))
+            theta.append(angle)
+        except:
+            pass
+    plt.polar(theta, r)
+    plt.show()

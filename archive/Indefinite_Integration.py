@@ -31,4 +31,17 @@ ax.spines['left'].set_position(('data',0))
 plt.show()
 plt.close()
 
-
+def calculate_indefinite_integral(expression):
+    def func(x):
+        return eval(expression, {"x": x, "__builtins__": None}, np.__dict__)
+    
+    x_vals = np.linspace(-10, 10, 400)
+    y_vals = [integrate.quad(func, 0, x)[0] for x in x_vals]
+    
+    plt.figure()
+    plt.plot(x_vals, y_vals)
+    plt.xlabel('X Axis')
+    plt.ylabel('Y Axis')
+    plt.title('Indefinite Integral of the function')
+    plt.grid(True)
+    plt.show()

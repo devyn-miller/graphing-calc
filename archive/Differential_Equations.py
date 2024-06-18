@@ -27,3 +27,11 @@ plt.plot(t,y)
 plt.xlabel('time')
 plt.ylabel('y(t)')
 plt.show()
+
+def solve_differential_equation(expression, initial_condition, time_points):
+    def model(y, t):
+        x = y  # Assuming dy/dt = f(x)
+        return eval(expression)
+    y = odeint(model, initial_condition, time_points)
+    plt.plot(time_points, y)
+    plt.show()

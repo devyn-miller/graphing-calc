@@ -2,7 +2,14 @@ from tkinter import *
 import math
 from Plotter import plot_function
 from Derivative import calculate_derivative
-from IndefiniteIntegration import calculate_indefinite_integral
+from Indefinite_Integration import calculate_indefinite_integral
+from Differential_Equations import solve_differential_equation
+from Polar import plot_polar
+from Polynomial_Graph import plot_polynomial
+from n_Derivative import plot_nth_derivative
+from CommonPointArea import plot_common_points
+from Definite_Integration import calculate_definite_integral
+from ThreeD import plot_3d
 
 
 class Calc():
@@ -108,8 +115,8 @@ calc = Frame(root)
 calc.grid()
 
 root.title("Calculator")
-text_box = Entry(calc, justify=RIGHT,width=30,font="Times 16 bold")
-text_box.grid(row = 0, column = 0,columnspan = 8,padx=30, pady = 30)
+text_box = Entry(calc, width=35, borderwidth=5)
+text_box.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 text_box.insert(0, "0")
 #text_box.focus()
 
@@ -166,23 +173,34 @@ log10.grid(row=4, column=4, padx=1 , pady=1)
 
 sine = Button(calc, height=2,width=4, padx=10,pady=10, text = "sin" , bg= "green")
 sine["command"]=lambda: sum1.operation("sine")
-sine.grid(row=5,column=0,padx=1,pady=1)
+sine.grid(row=2, column=0)
 
 cosine = Button(calc, height=2,width=4, padx=10,pady=10, text = "cos" , bg= "green")
 cosine["command"]=lambda: sum1.operation("cosine")
-cosine.grid(row=5,column=1,padx=1,pady=1)
+cosine.grid(row=2, column=1)
 
 tangent = Button(calc, height=2,width=4, padx=10,pady=10, text = "tan" , bg= "green")
 tangent["command"]=lambda: sum1.operation("tangent")
-tangent.grid(row=5,column=2,padx=1,pady=1)
+tangent.grid(row=2, column=2)
 
-exponent = Button(calc, height=2, width=4, padx=10, pady=10, text='e^x', bg="green")
-exponent["command"]=lambda: sum1.operation("exp")
-exponent.grid(row=5,column=3,padx=1,pady=1)
+trig_frame = Frame(calc, borderwidth=2, relief="ridge")
+trig_frame.grid(row=2, column=0, columnspan=4, sticky="ew")
+
+sine_button = Button(trig_frame, text='sin', command=lambda: sum1.operation("sine"))
+cosine_button = Button(trig_frame, text='cos', command=lambda: sum1.operation("cosine"))
+tangent_button = Button(trig_frame, text='tan', command=lambda: sum1.operation("tangent"))
+
+sine_button.pack(side=LEFT)
+cosine_button.pack(side=LEFT)
+tangent_button.pack(side=LEFT)
 
 inv = Button(calc, height=2, width=4, padx=10, pady=10, text="1/x", bg="green")
 inv["command"] = lambda: sum1.operation("inv")
-inv.grid(row=5,column=4,padx=1,pady=1)
+inv.grid(row=2, column=3)
+
+exponent = Button(calc, height=2, width=4, padx=10, pady=10, text='e^x', bg="green")
+exponent["command"]=lambda: sum1.operation("exp")
+exponent.grid(row=5, column=3)
 
 point = Button(calc,height =2,width=4,padx=10, pady = 10, text = ".",bg="white")
 point["command"] = lambda: sum1.num_press(".")
@@ -207,15 +225,70 @@ equals.grid(row = 4, column = 5,columnspan=1,rowspan=2,padx=1, pady = 1)
 
 plot_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Plot', bg="blue")
 plot_button["command"] = lambda: plot_function(text_box.get())
-plot_button.grid(row=6, column=0, padx=1, pady=1)
+plot_button.grid(row=5, column=0, padx=1, pady=1)
 
 derivative_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Deriv', bg="blue")
 derivative_button["command"] = lambda: calculate_derivative(text_box.get())
-derivative_button.grid(row=6, column=1, padx=1, pady=1)
+derivative_button.grid(row=4, column=0, padx=1, pady=1)
 
 integral_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Integrate', bg="blue")
 integral_button["command"] = lambda: calculate_indefinite_integral(text_box.get())
-integral_button.grid(row=6, column=2, padx=1, pady=1)
+integral_button.grid(row=4, column=1, padx=1, pady=1)
+
+diff_eq_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Diff Eq', bg="blue")
+diff_eq_button["command"] = lambda: solve_differential_equation(text_box.get(), "initial_condition_placeholder", "time_points_placeholder")
+diff_eq_button.grid(row=7, column=0, padx=1, pady=1)
+
+polar_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Polar', bg="blue")
+polar_button["command"] = lambda: plot_polar(text_box.get())
+polar_button.grid(row=5, column=2, padx=1, pady=1)
+
+polynomial_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Poly', bg="blue")
+polynomial_button["command"] = lambda: plot_polynomial(text_box.get())
+polynomial_button.grid(row=7, column=2, padx=1, pady=1)
+
+nth_derivative_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Nth Deriv', bg="blue")
+nth_derivative_button["command"] = lambda n=n: plot_nth_derivative(text_box.get(), n)
+nth_derivative_button.grid(row=4, column=2, padx=1, pady=1)
+
+# Assuming text_box1 and text_box2 are Text widgets for inputting functions to find intersections
+text_box1 = Text(calc, height=2, width=10)
+text_box1.grid(row=5, column=1, padx=1, pady=1)
+text_box2 = Text(calc, height=2, width=10)
+text_box2.grid(row=5, column=2, padx=1, pady=1)
+
+common_points_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Intersect', bg="blue")
+common_points_button["command"] = lambda: plot_common_points(text_box1.get("1.0", "end-1c"), text_box2.get("1.0", "end-1c"))
+common_points_button.grid(row=5, column=3, padx=1, pady=1)
+
+# Assuming text_box_expression, text_box_lower_bound, and text_box_upper_bound are Text widgets for inputting the expression and bounds for definite integration
+text_box_expression = Text(calc, height=2, width=10)
+text_box_expression.grid(row=4, column=1, padx=1, pady=1)
+text_box_lower_bound = Text(calc, height=2, width=10)
+text_box_lower_bound.grid(row=4, column=2, padx=1, pady=1)
+text_box_upper_bound = Text(calc, height=2, width=10)
+text_box_upper_bound.grid(row=4, column=3, padx=1, pady=1)
+
+def_int_button = Button(calc, height=2, width=4, padx=10, pady=10, text='Def Int', bg="blue")
+def_int_button["command"] = lambda: calculate_definite_integral(text_box_expression.get("1.0", "end-1c"), text_box_lower_bound.get("1.0", "end-1c"), text_box_upper_bound.get("1.0", "end-1c"))
+def_int_button.grid(row=4, column=4, padx=1, pady=1)
+def_int_button.grid(row=4, column=3, padx=1, pady=1)
+
+plot_3d_button = Button(calc, height=2, width=4, padx=10, pady=10, text='3D Plot', bg="blue")
+plot_3d_button["command"] = lambda: plot_3d(text_box.get())
+plot_3d_button.grid(row=5, column=1, padx=1, pady=1)
+
+# Additional buttons for basic operations
+add_button = Button(calc, text='+', padx=20, pady=20, command=lambda: sum1.operation("add"))
+add_button.grid(row=3, column=0)
+
+subtract_button = Button(calc, text='-', padx=22, pady=20, command=lambda: sum1.operation("subtract"))
+subtract_button.grid(row=3, column=1)
+
+multiply_button = Button(calc, text='*', padx=21, pady=20, command=lambda: sum1.operation("times"))
+multiply_button.grid(row=3, column=2)
+
+divide_button = Button(calc, text='/', padx=22, pady=20, command=lambda: sum1.operation("divide"))
+divide_button.grid(row=3, column=3)
 
 root.mainloop()
-

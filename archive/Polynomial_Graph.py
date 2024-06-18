@@ -70,3 +70,9 @@ ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data',0))
 plt.show()
 plt.close()
+
+def plot_polynomial(expression):
+    x = np.linspace(-100, 100, 400)
+    y = eval(expression.replace('x', '*x'))
+    plt.plot(x, y)
+    plt.show()

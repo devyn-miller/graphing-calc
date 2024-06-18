@@ -50,3 +50,9 @@ ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data',0))
 plt.show()
 plt.close()
+
+def plot_nth_derivative(expression, n):
+    x_vals = np.arange(-10, 10, 1)
+    y_vals = [derivative(lambda x: eval(expression), val, dx=1e-6, n=n, order=2*n+1) for val in x_vals]
+    plt.plot(x_vals, y_vals)
+    plt.show()
